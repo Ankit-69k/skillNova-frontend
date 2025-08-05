@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import CourseCardSearch from "@/components/CourseCardSearch";
 import SelectedCourse from "./selectedCourse";
-import Loading from "@/components/loading";
+import Loading from "@/components/Loading";
 
 const Search = () => {
   const searchParams = useSearchParams();

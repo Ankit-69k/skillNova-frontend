@@ -3,10 +3,12 @@
 import { Bell, BookOpen } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 const NonDashboardNavbar = () => {
-  //   const { user } = useUser();
-  //   const userRole = user?.publicMetadata?.userType as "student" | "teacher";
+  const { user } = useUser();
+  const userRole = user?.publicMetadata?.userType as "student" | "teacher";
 
   return (
     <nav className="nondashboard-navbar">
@@ -31,7 +33,7 @@ const NonDashboardNavbar = () => {
             <Bell className="nondashboard-navbar__notification-icon" />
           </button>
 
-          {/* <SignedIn>
+          <SignedIn>
             <UserButton
               appearance={{
                 baseTheme: dark,
@@ -52,7 +54,7 @@ const NonDashboardNavbar = () => {
             <Link href="/signup" className="nondashboard-navbar__auth-button--signup" scroll={false}>
               Sign up
             </Link>
-          </SignedOut> */}
+          </SignedOut>
         </div>
       </div>
     </nav>
