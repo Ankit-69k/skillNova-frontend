@@ -5,17 +5,9 @@ import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { courseSchema } from "@/lib/schemas";
-import {
-  centsToDollars,
-  createCourseFormData,
-  uploadAllVideos,
-} from "@/lib/utils";
+import { createCourseFormData, paiseToRupees, uploadAllVideos } from "@/lib/utils";
 import { openSectionModal, setSections } from "@/state";
-import {
-  useGetCourseQuery,
-  useUpdateCourseMutation,
-  useGetUploadVideoUrlMutation,
-} from "@/state/api";
+import { useGetCourseQuery, useUpdateCourseMutation, useGetUploadVideoUrlMutation } from "@/state/api";
 import { useAppDispatch, useAppSelector } from "@/state/redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, Plus } from "lucide-react";
@@ -54,7 +46,7 @@ const CourseEditor = () => {
         courseTitle: course.title,
         courseDescription: course.description,
         courseCategory: course.category,
-        coursePrice: centsToDollars(course.price),
+        coursePrice: paiseToRupees(course.price),
         courseStatus: course.status === "Published",
       });
       dispatch(setSections(course.sections || []));
@@ -63,11 +55,7 @@ const CourseEditor = () => {
 
   const onSubmit = async (data: CourseFormData) => {
     try {
-      const updatedSections = await uploadAllVideos(
-        sections,
-        id,
-        getUploadVideoUrl
-      );
+      const updatedSections = await uploadAllVideos(sections, id, getUploadVideoUrl);
 
       const formData = createCourseFormData(data, updatedSections);
 
@@ -107,19 +95,12 @@ const CourseEditor = () => {
                   type="switch"
                   className="flex items-center space-x-2"
                   labelClassName={`text-sm font-medium ${
-                    methods.watch("courseStatus")
-                      ? "text-green-500"
-                      : "text-yellow-500"
+                    methods.watch("courseStatus") ? "text-green-500" : "text-yellow-500"
                   }`}
                   inputClassName="data-[state=checked]:bg-green-500"
                 />
-                <Button
-                  type="submit"
-                  className="bg-primary-700 hover:bg-primary-600"
-                >
-                  {methods.watch("courseStatus")
-                    ? "Update Published Course"
-                    : "Save Draft"}
+                <Button type="submit" className="bg-primary-700 hover:bg-primary-600">
+                  {methods.watch("courseStatus") ? "Update Published Course" : "Save Draft"}
                 </Button>
               </div>
             }
@@ -174,23 +155,17 @@ const CourseEditor = () => {
 
             <div className="bg-customgreys-darkGrey mt-4 md:mt-0 p-4 rounded-lg basis-1/2">
               <div className="flex justify-between items-center mb-2">
-                <h2 className="text-2xl font-semibold text-secondary-foreground">
-                  Sections
-                </h2>
+                <h2 className="text-2xl font-semibold text-secondary-foreground">Sections</h2>
 
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
-                  onClick={() =>
-                    dispatch(openSectionModal({ sectionIndex: null }))
-                  }
+                  onClick={() => dispatch(openSectionModal({ sectionIndex: null }))}
                   className="border-none text-primary-700 group"
                 >
                   <Plus className="mr-1 h-4 w-4 text-primary-700 group-hover:white-100" />
-                  <span className="text-primary-700 group-hover:white-100">
-                    Add Section
-                  </span>
+                  <span className="text-primary-700 group-hover:white-100">Add Section</span>
                 </Button>
               </div>
 

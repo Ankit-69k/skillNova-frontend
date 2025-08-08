@@ -43,7 +43,6 @@ const AppSidebar = () => {
 
   const userType = (user.publicMetadata.userType as "student" | "teacher") || "student";
   const currentNavLinks = navLinks[userType];
-
   return (
     <Sidebar collapsible="icon" style={{ height: "100vh" }} className="bg-customgreys-primarybg border-none shadow-lg">
       <SidebarHeader>

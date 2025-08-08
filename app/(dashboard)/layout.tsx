@@ -26,7 +26,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (!isLoaded) return <Loading />;
   if (!user) return <div>Please sign in to access this page.</div>;
-
   return (
     <SidebarProvider>
       <div className="dashboard">
